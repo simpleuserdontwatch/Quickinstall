@@ -77,18 +77,13 @@ def apply():
     if not os.path.isfile(install_wim_path):
         messagebox.showerror("Error", "Not a install.wim file")
         return
-    if not os.path.exists(drive):
+    if not os.path.exists(drive + ':'):
         messagebox.showerror("Error", "Invalid drive. Have you inserted the drive or specified the drive letter only?")
         return
     if not os.path.isfile(seven_zip_path) and not seven_zip_path.lower() == "7z":
         messagebox.showerror("Error", "Invalid 7z executable path")
         return
-    os.system(f'format {drive}:')
-    # Apply install.wim using 7-Zip
-    command = f'{seven_zip_path} x -o{drive}: {install_wim_path}'
-    os.system(command)
-
-    os.system('bcdboot {drive}: /s {drive}: /f ALL')
+    os.system(f'Install.exe {drive} {seven_zip_path} {install_wim_path}')
     messagebox.showinfo('Done!', 'Installion is done\nYou may now inject the flash drive')
 def easteregg(e):
     d.config(text='Microsoft QuickInstall')
@@ -109,7 +104,7 @@ ttk.Label(text='7z exceuteable path:').grid(column=1,row=4)
 a.grid(column=2,row=2)
 b.grid(column=2,row=3)
 c.grid(column=2,row=4)
-CreateToolTip(a,'Specify install.wim file path from windows\ninstallation CD.\nAlso you could extract install.wim from windows 7+ iso using 7z\nand specify in there')
+CreateToolTip(a,'Specify install.wim file path from windows\ninstallation CD.\nAlso you could extract install.wim from windows 7+ iso using 7z\nand specify in there\nAlso no spaces in the path or quotes')
 CreateToolTip(b, 'On what drive would windows be installed? (Letter only)')
 CreateToolTip(c, 'The 7z executeable path.\nIf you dont have 7z, then go to 7-zip.org/download.html and download it\nif it was installed, copy the files of 7z program\nthen put it in the path of program\nand specify 7z.exe')
 ttk.Label(text='').grid(column=2,row=5)
